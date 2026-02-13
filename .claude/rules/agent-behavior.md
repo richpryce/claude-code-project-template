@@ -52,9 +52,11 @@ Every code change requires a tracked beads issue.
 4. Activate: `bd update <id> --status in_progress`
 
 ### During work
+- **Commit after every meaningful change** — a completed function, a passing test, a config update. Small, frequent commits beat one large commit at the end.
+- Commit with issue ID: `git commit -m "type(scope): description (bd-xxx)"`
 - `bd sync` after issue changes
-- Commit with issue ID: `git commit -m "description (bd-xxx)"`
 - Use `bd update <id> --notes "context"` to record decisions
+- If you've edited 3+ files without committing, stop and commit now.
 
 ### Session end
 1. `bd close <id> --reason "Completed" --json` (if done)

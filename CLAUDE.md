@@ -51,7 +51,8 @@ openspec/specs/   # Feature specifications
 
 ### During work
 
-- Commit with issue ID: `git commit -m "description (bd-xxx)"`
+- **Commit after every meaningful change** — don't batch all changes into one commit at the end
+- Commit with issue ID: `git commit -m "type(scope): description (bd-xxx)"`
 - Sync periodically: `bd sync`
 
 ### When done
