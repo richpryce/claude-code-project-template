@@ -41,7 +41,7 @@ claude
 > /brain-dump
 ```
 
-Share your project idea. Claude will populate docs, create beads issues, and get you building.
+Share your project idea. Claude will populate `openspec/project.md`, create feature specs in `openspec/specs/`, fill out project docs, and create beads issues linked to each spec.
 
 ## Daily Workflow
 

@@ -4,7 +4,7 @@ Create an implementation plan before writing any code.
 
 ## Instructions
 
-1. **Restate requirements** — clarify the user's request in specific terms. Ask if ambiguous.
+1. **Restate requirements** — check `openspec/specs/` for a relevant spec first. If one exists, use it as the source of truth. If not, clarify the user's request in specific terms. Ask if ambiguous.
 
 2. **Break into phases** with concrete tasks and verification steps:
    ```

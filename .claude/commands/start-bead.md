@@ -22,6 +22,8 @@ Start a new tracked task with Beads.
    bd update [id] --status in_progress
    ```
 
-4. Confirm the active issue and suggest reading relevant files.
+4. Check `openspec/specs/` for a spec related to this issue. If one exists, read it and confirm the requirements with the user. If none exists, suggest creating one before implementation.
+
+5. Confirm the active issue and suggest reading relevant files.
 
 NEVER use `bd edit`. Use `bd update <id> --flags` for modifications.
