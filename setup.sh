@@ -2,21 +2,19 @@
 set -euo pipefail
 
 # Project Template Setup
-# Usage: ./setup.sh <project-name> [target-directory]
+# Usage: ./setup.sh <project-name>
 
 PROJECT_NAME="${1:-}"
-TARGET_DIR="${2:-.}"
 
 if [ -z "$PROJECT_NAME" ]; then
-  echo "Usage: ./setup.sh <project-name> [target-directory]"
+  echo "Usage: ./setup.sh <project-name>"
   echo ""
-  echo "Examples:"
-  echo "  ./setup.sh my-app           # Creates ./my-app"
-  echo "  ./setup.sh my-app ~/code    # Creates ~/code/my-app"
+  echo "Example:"
+  echo "  ./setup.sh my-app    # Creates ~/my-app"
   exit 1
 fi
 
-DEST="$TARGET_DIR/$PROJECT_NAME"
+DEST="$HOME/$PROJECT_NAME"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 if [ -d "$DEST" ]; then
