@@ -119,7 +119,3 @@ git init
 bd init && bd hooks install
 cp .env.example .env
 ```
-
-## License
-
-[Your License Here]
