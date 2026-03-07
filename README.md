@@ -1,6 +1,6 @@
 # Claude Code Project Template
 
-A ready-to-use project template for building software with [Claude Code](https://docs.anthropic.com/en/docs/claude-code). It gives Claude structured rules, slash commands, git hooks, and issue tracking out of the box so you can go from idea to working code in a single session.
+A ready-to-use project template for building software with [Claude Code](https://code.claude.com/docs/en/setup). It gives Claude structured rules, slash commands, git hooks, and issue tracking out of the box so you can go from idea to working code in a single session.
 
 ## What's Included
 
@@ -14,8 +14,9 @@ A ready-to-use project template for building software with [Claude Code](https:/
 
 ## Prerequisites
 
-- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) (`npm install -g @anthropic-ai/claude-code`)
-- [Beads](https://github.com/anthropics/beads) (`brew install beads` or `go install github.com/anthropics/beads/cmd/bd@latest`)
+- [Claude Code](https://code.claude.com/docs/en/setup) (`curl -fsSL https://claude.ai/install.sh | bash`)
+- [Beads](https://github.com/steveyegge/beads) (`npm install -g @beads/bd` or `brew install beads`)
+- [OpenSpec](https://openspec.dev/) (`npm install -g @fission-ai/openspec@latest`)
 
 ## Quick Start
 
@@ -36,6 +37,8 @@ claude
 ```
 
 The `/brain-dump` command walks you through describing your project. Claude will populate `openspec/project.md`, create feature specs, fill out docs, and create beads issues for each piece of work.
+
+> Optional: if you prefer the native OpenSpec workflow, run `openspec update` and use `/opsx:propose` for spec-first change proposals.
 
 ### 3. Start building
 

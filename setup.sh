@@ -48,6 +48,12 @@ else
   echo "  cd $DEST && bd init && bd hooks install"
 fi
 
+if command -v openspec &>/dev/null; then
+  echo ""
+  echo "OpenSpec detected. Optional next step in your new project:"
+  echo "  cd $DEST && openspec update"
+fi
+
 echo ""
 echo "Project '$PROJECT_NAME' is ready at $DEST"
 echo ""

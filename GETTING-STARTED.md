@@ -3,12 +3,15 @@
 ## Prerequisites
 
 ```bash
-# Claude Code
-npm install -g @anthropic-ai/claude-code
+# Claude Code (native installer)
+curl -fsSL https://claude.ai/install.sh | bash
 
-# Beads (task tracking) — install via Homebrew or go install
-brew install beads
-# or: go install github.com/anthropics/beads/cmd/bd@latest
+# Beads (task tracking)
+npm install -g @beads/bd
+# or: brew install beads
+
+# OpenSpec
+npm install -g @fission-ai/openspec@latest
 ```
 
 ## Setup
