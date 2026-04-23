@@ -49,7 +49,7 @@ Stage specific files (NOT `git add -A`):
 git add [specific files]
 git commit -m "type(scope): description (bd-xxx)"
 bd close [id] --reason "Completed" --json
-bd sync
+bd list --json --all
 git push
 ```
 

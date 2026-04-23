@@ -94,7 +94,7 @@ The template enforces a simple loop:
 1. **Pick work** -- `bd ready` shows unblocked issues, or create one with `bd create`
 2. **Start** -- `bd update <id> --status in_progress`
 3. **Build** -- Write code with Claude. Commit frequently with `(bd-xxx)` in the message.
-4. **Finish** -- `bd close <id>`, run tests, `bd sync`, `git push`
+4. **Finish** -- `bd close <id>`, run tests, optionally verify with `bd list --json --all`, then `git push`
 
 Hooks automatically warn you if you try to edit code or commit without an active issue.
 

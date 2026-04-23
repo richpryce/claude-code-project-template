@@ -59,20 +59,20 @@ openspec/specs/   # Feature specifications
 
 - **Commit after every meaningful change** — don't batch all changes into one commit at the end
 - Commit with issue ID: `git commit -m "type(scope): description (bd-xxx)"`
-- Sync periodically: `bd sync`
+- Verify issue state when needed: `bd list --json --all`
 
 ### When done
 
 1. Close the issue: `bd close <id> --reason "Completed" --json`
-2. Sync: `bd sync`
-3. Run tests before finishing
+2. Run tests before finishing
+3. Verify tracker state if needed: `bd list --json --all`
 
 ### Critical rules
 
 - NEVER use `bd edit` (interactive — agents cannot use it)
 - Use `bd update <id> --title/--description/--notes` instead
 - Always use `--json` flag when creating/querying for structured output
-- Run `bd sync` after making issue changes
+- Beads auto-syncs via Dolt; verify with `bd list --json --all` or `bd vc status` when you need confirmation
 - Include issue ID `(bd-xxx)` in commit messages
 
 Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
@@ -84,7 +84,7 @@ Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`
 3. Implement one thin vertical slice with outside-in tests
 4. Run verification (`test`, `lint`, `typecheck` where available)
 5. Checkpoint summary for human approval at phase boundary
-6. Commit with `(bd-xxx)`, sync beads, continue or close
+6. Commit with `(bd-xxx)`, verify tracker state if needed, continue or close
 
 ## Git
 
@@ -103,7 +103,7 @@ Branch naming: `feature/*`, `fix/*` from `main`
 - Run tests before marking work complete
 - Update `docs/DECISIONS.md` for architectural changes
 - Keep bead notes linked to spec paths (`Spec source: openspec/...`)
-- Run `bd sync` before ending a session
+- Prefer `bd list --json --all` / `bd vc status` if you need to confirm tracker state before ending a session
 
 ## Context Files
 

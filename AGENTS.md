@@ -17,7 +17,7 @@ This file exists for compatibility with tools that look for AGENTS.md.
 4. **PUSH TO REMOTE** - This is MANDATORY:
    ```bash
    git pull --rebase
-   bd sync
+   bd list --json --all
    git push
    git status  # MUST show "up to date with origin"
    ```

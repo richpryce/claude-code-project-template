@@ -83,10 +83,10 @@ If you find yourself creating beads issues or writing code without a correspondi
               bd update <id> --notes "Spec source: openspec/..."
 4. WORK       claude  (AI-assisted development)
 5. CHECKPOINT git add [files] && git commit -m "type(scope): msg (bd-xxx)"
-              git push && bd sync
+              git push
 6. TEST       npm test
 7. FINISH     bd close <id> --reason "Completed" --json
-              bd sync && git push
+              bd list --json --all && git push
 ```
 
 ---
@@ -97,8 +97,8 @@ If you find yourself creating beads issues or writing code without a correspondi
 |---------|---------|
 | `/brain-dump` | Turn unstructured ideas into OpenSpec artifacts, docs, and beads issues |
 | `/start-bead` | Create/pick a beads issue (gates on existing OpenSpec artifact for non-trivial work) |
-| `/complete-bead` | Run tests, verify spec linkage, commit, close issue, sync, push |
-| `/checkpoint` | Stage, commit, push, sync current progress |
+| `/complete-bead` | Run tests, verify spec linkage, commit, close issue, verify tracker state, push |
+| `/checkpoint` | Stage, commit, push, optionally verify tracker state |
 | `/status` | Show beads state, git state, OpenSpec artifacts, and spec linkage |
 | `/plan` | Plan before implementing — requires spec artifact; waits for approval |
 | `/tdd` | Test-driven development cycle |
@@ -122,7 +122,8 @@ If you find yourself creating beads issues or writing code without a correspondi
 | `bd close <id> --reason "msg" --json` | Close issue |
 | `bd list --json` | List all issues |
 | `bd ready --json` | Show unblocked issues |
-| `bd sync` | Sync database with git |
+| `bd list --json --all` | Verify tracker state including closed issues |
+| `bd vc status` | Show Dolt/beads working state when you need confirmation |
 | `bd update <id> --notes "msg"` | Add notes to issue |
 | `bd show <id> --json` | Show issue details |
 
