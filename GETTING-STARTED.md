@@ -23,55 +23,95 @@ npm install -g @fission-ai/openspec@latest
 cd my-project-name
 ```
 
-This copies the template, initializes git, and sets up beads tracking in one step.
+`setup.sh` copies the template, removes the old `.beads/` database, runs `bd init` and `bd hooks install` to create a clean fresh database, and initializes git.
+
+### Verify clean state after setup
+
+After `setup.sh` (or after any `git clone` / copy of an existing project), verify the beads database is clean before starting work:
+
+```bash
+bd list --json      # should return empty or only expected issues
+bd ready --json     # should return only issues you intend to work on
+```
+
+If you see unexpected issues (e.g. leftover issues from a previous project), your `.beads/` was not reset. Fix it:
+
+```bash
+rm -rf .beads
+bd init
+bd hooks install
+```
+
+Do NOT trust `.beads.bak` or backup files — delete them along with `.beads/` when resetting.
 
 ### Manual setup
 
 ```bash
 cp -r project-template my-project-name
 cd my-project-name
-rm -rf .git
+rm -rf .git .beads
 git init
 bd init
 bd hooks install          # Auto-syncs JSONL on commit/pull
 cp .env.example .env      # Edit with your values
 ```
 
-### Then start Claude Code
+---
 
-```bash
-claude
-> /brain-dump
+## The Spec-First Workflow
+
+OpenSpec artifacts in `openspec/` are the **authoritative source of truth** for what to build. Beads issues are the execution queue derived from those specs. `docs/SPEC.md` is a human-readable summary, not the spec itself.
+
+The correct order is:
+
+```
+1. Spec (openspec/specs/ or openspec/changes/)
+2. Beads issues linked to spec artifacts
+3. Code implementation
 ```
 
-Share your project idea. Claude will populate `openspec/project.md`, create feature specs in `openspec/specs/`, fill out project docs, and create beads issues linked to each spec.
+If you find yourself creating beads issues or writing code without a corresponding OpenSpec artifact, stop and create the spec first.
 
-## Daily Workflow
+---
+
+## Session Start: Daily Workflow
 
 ```
 1. CHECK      bd list --json / bd ready --json
-2. START      bd create "feat: description" -p 1 --json
-              bd update <id> --status in_progress
-3. WORK       claude  (AI-assisted development)
-4. CHECKPOINT git add [files] && git commit -m "checkpoint: msg (bd-xxx)"
-              bd sync
-5. TEST       npm test
-6. FINISH     bd close <id> --reason "Completed" --json
+2. SPEC       ls openspec/changes/ openspec/specs/  (must exist before step 3)
+3. START      bd update <id> --status in_progress
+              bd update <id> --notes "Spec source: openspec/..."
+4. WORK       claude  (AI-assisted development)
+5. CHECKPOINT git add [files] && git commit -m "type(scope): msg (bd-xxx)"
+              git push && bd sync
+6. TEST       npm test
+7. FINISH     bd close <id> --reason "Completed" --json
               bd sync && git push
 ```
+
+---
 
 ## Slash Commands (in Claude Code)
 
 | Command | Purpose |
 |---------|---------|
-| `/start-bead` | Create/pick a beads issue and start work |
-| `/complete-bead` | Run tests, commit, close issue, sync |
-| `/checkpoint` | Stage, commit, sync current progress |
-| `/status` | Show issues, git state, ready tasks |
-| `/plan` | Plan before implementing (waits for approval) |
+| `/brain-dump` | Turn unstructured ideas into OpenSpec artifacts, docs, and beads issues |
+| `/start-bead` | Create/pick a beads issue (gates on existing OpenSpec artifact for non-trivial work) |
+| `/complete-bead` | Run tests, verify spec linkage, commit, close issue, sync, push |
+| `/checkpoint` | Stage, commit, push, sync current progress |
+| `/status` | Show beads state, git state, OpenSpec artifacts, and spec linkage |
+| `/plan` | Plan before implementing — requires spec artifact; waits for approval |
 | `/tdd` | Test-driven development cycle |
 | `/code-review` | Security and quality review |
-| `/brain-dump` | Turn unstructured ideas into docs |
+
+### Brain dump: what it creates
+
+`/brain-dump` produces:
+1. **OpenSpec artifacts** (primary): `openspec/changes/<id>/` or `openspec/specs/<feature>.md` — these are the authoritative spec
+2. **Docs summary** (secondary): `docs/SPEC.md`, `docs/DECISIONS.md`, updated `CLAUDE.md` and `README.md`
+3. **Beads issues**: linked to spec artifacts with `Spec source:` notes
+
+---
 
 ## Beads Commands Reference
 
@@ -86,7 +126,9 @@ Share your project idea. Claude will populate `openspec/project.md`, create feat
 | `bd update <id> --notes "msg"` | Add notes to issue |
 | `bd show <id> --json` | Show issue details |
 
-**Never use `bd edit`** — it opens an interactive editor. Use `bd update` with flags.
+**Never use `bd edit`** — it opens an interactive editor. Use `bd update` with flags instead.
+
+---
 
 ## Token Efficiency Tips
 
@@ -95,9 +137,13 @@ Share your project idea. Claude will populate `openspec/project.md`, create feat
 - Break large tasks into steps
 - Use `@file` syntax in Claude Code to reference files
 
+---
+
 ## Documentation
 
 - `CLAUDE.md` — Agent instructions (auto-loaded)
-- `docs/SPEC.md` — Project specification
+- `docs/SPEC.md` — Human-readable project summary (not the implementation spec)
 - `docs/DECISIONS.md` — Architecture decisions
-- `openspec/specs/` — Feature specifications
+- `openspec/specs/` — Feature specifications (authoritative)
+- `openspec/changes/` — Change proposals (authoritative for active changes)
+- `openspec/AGENTS.md` — How AI agents should work with OpenSpec + Beads

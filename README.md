@@ -36,9 +36,7 @@ claude
 > /brain-dump
 ```
 
-The `/brain-dump` command walks you through describing your project. Claude will populate `openspec/project.md`, create feature specs, fill out docs, and create beads issues for each piece of work.
-
-> Optional: if you prefer the native OpenSpec workflow, run `openspec update` and use `/opsx:propose` for spec-first change proposals.
+The `/brain-dump` command walks you through describing your project. Claude will create OpenSpec artifacts in `openspec/specs/` or `openspec/changes/` (the authoritative spec), fill out summary docs, and create beads issues linked to each spec artifact.
 
 ### 3. Start building
 
@@ -102,11 +100,18 @@ Hooks automatically warn you if you try to edit code or commit without an active
 
 ## Customising the Template
 
-After running `setup.sh`, make it yours:
+After running `setup.sh`, verify clean beads state first:
+
+```bash
+bd list --json     # should be empty
+bd ready --json    # should be empty
+```
+
+Then make it yours:
 
 - **CLAUDE.md** -- Update the project overview, stack, and commands sections
-- **docs/SPEC.md** -- Fill in your project specification (or let `/brain-dump` do it)
-- **openspec/project.md** -- Set your project identity, tech stack, and constraints
+- **openspec/specs/** -- Create your feature specs here (authoritative source for implementation)
+- **docs/SPEC.md** -- High-level human-readable summary (not the implementation spec)
 - **.claude/rules/** -- Adjust coding style, security, or testing rules to match your preferences
 - **.env.example** -- Add your project's environment variables
 
@@ -117,8 +122,10 @@ If you prefer not to use `setup.sh`:
 ```bash
 cp -r project-template my-project
 cd my-project
-rm -rf .git .beads setup.sh
+rm -rf .git .beads .beads.bak setup.sh
 git init
 bd init && bd hooks install
 cp .env.example .env
 ```
+
+Always remove `.beads/` and any backup files when starting from a copy — they contain state from the source project, not yours.
